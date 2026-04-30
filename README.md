@@ -10,6 +10,14 @@ Simple onebyte hack, patching just one memory byte to enable cs2 replay glow. Ve
 
 [![cs2onebyte](.github/showcase.png)](https://youtu.be/giFeufea6s8)
 
+## 💡 Important
+
+> [!WARNING]
+> This project is provided *'as is'* for learning purposes with no warranties or responsibility from the developers/contributors. Use it at your own risk; you are the only one accountable for your actions
+
+* **Detection Status:** This project is intended solely for single-player use. This project **Writes To Memory**, and might cause integrity checks to raise detection or lower trust factor.
+* **Anti-Virus Alerts:** This software may resemble malware in behavior because it accesses other processes memory, so it is commonly flagged by anti‑virus programs. I strongly encourage you to read the source code and build it yourself by following the [developers instructions](#-developer-instructions).
+
 ## 🌳 Simple Use
 
 1. You can download it from [**Releases**](./releases) tab or **build it yourself** by following [developers instructions](#-developer-instructions).
@@ -17,13 +25,6 @@ Simple onebyte hack, patching just one memory byte to enable cs2 replay glow. Ve
 2. Open the game & when in menu, open `cs2-onebyte-hack.exe`, and thats it, you can close it now!
 
 3. **⭐ The repository if you like the project!**
-
-## 💡 Important
-
-> This project is provided *'as is'* for learning purposes with no warranties or responsibility from the developers/contributors. Use it at your own risk; you are the only one accountable for your actions
-
-* **Detection Status:** This project is intended solely for single-player use.
-* **Anti-Virus Alerts:** This software may resemble malware in behavior because it accesses other processes memory, so it is commonly flagged by anti‑virus programs. I strongly encourage you to read the source code and build it yourself by following the [developers instructions](#-developer-instructions).
 
 ## 📘 Developer Instructions
 
