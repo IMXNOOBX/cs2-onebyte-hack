@@ -31,7 +31,7 @@ Simple onebyte hack, patching just one memory byte to enable cs2 replay glow. Ve
 1. Clone repository. Make sure you copy the command below to clone dependencies too
 
 ```sh
-git clone --recursive https://gitlab.com/IMXNOOBX/cs2-onebyte-hack
+git clone --recursive https://github.com/IMXNOOBX/cs2-onebyte-hack
 ```
 
 2. Build the app using **Visual Studio 2026**
@@ -60,4 +60,4 @@ This project is licensed under [**CC BY-NC 4.0**](https://creativecommons.org/li
 ```
 
 ### ©️ Copyright
-The content of this project is ©️ by [IMXNOOBX](https://gitlab.com/IMXNOOBX) and the respective contributors. See the [LICENSE.md](LICENSE) file for details.
+The content of this project is ©️ by [IMXNOOBX](https://github.com/IMXNOOBX) and the respective contributors. See the [LICENSE.md](LICENSE) file for details.
