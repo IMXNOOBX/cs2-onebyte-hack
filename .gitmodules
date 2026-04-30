@@ -1,0 +1,3 @@
+[submodule "src/external/AsyncLogger"]
+	path = src/external/AsyncLogger
+	url = https://github.com/Yimura/AsyncLogger
