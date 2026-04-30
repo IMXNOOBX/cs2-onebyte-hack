@@ -19,7 +19,7 @@ int main()
     }
 
 exit:
-    LOGF(VERBOSE, "Thats it, im done, hope you had a great time!");
+    LOGF(VERBOSE, "Thats it, im done, closing in 5s!");
     LogHelper::Destroy();
-    std::cin.get();
+    std::this_thread::sleep_for(5s);
 }
