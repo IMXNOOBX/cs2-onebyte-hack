@@ -38,7 +38,7 @@ bool Engine::InitImpl() {
 }
 
 bool Engine::RunImpl() {
-    uintptr_t address = client.base + 0xC3B3C1 + 0xB;
+    uintptr_t address = client.base + offsets::base + 0xB;
 
     auto before = process->read<uint8_t>(address);
 
