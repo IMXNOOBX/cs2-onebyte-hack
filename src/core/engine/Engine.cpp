@@ -75,8 +75,6 @@ bool Engine::AwaitProcess() {
     if (!process || process->handle_) // Process not initialized, or already attached
         return false;
 
-    //const DWORD open_flags = PROCESS_ALL_ACCESS;
-
     do {
         if (process->AttachProcess("cs2.exe", PROCESS_ALL_ACCESS))
             break;

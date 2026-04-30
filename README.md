@@ -1,26 +1,28 @@
 # 🕹️ CS2 Onebyte Hack
 
-Simple onebyte hack, patching just one memory byte to enable cs2 replay glow. 
+Simple onebyte hack, patching just one memory byte to enable cs2 replay glow. Very easy implementation, just open the app once to enable it, memory will patched and should work for the entire session. You can open it again to restore the memory.
+
+> This idea was brought to me by a community member, I'm not the one that discovered this "feature".
 
 ## Showcase
 
 > Click the picture below to go to the showcase video
 
-[![cs2esp](.github/showcase.png)](https://youtu.be/3WHHLUyHyzA)
+[![cs2onebyte](.github/showcase.png)](https://youtu.be/giFeufea6s8)
 
 ## 🌳 Simple Use
 
 1. You can download it from [**Releases**](./releases) tab or **build it yourself** by following [developers instructions](#-developer-instructions).
 
-2. Open the game & the `cs2-external-esp.exe`, and thats it!
-3. **⭐ The repository if you like the project!**
+2. Open the game & when in menu, open `cs2-onebyte-hack.exe`, and thats it, you can close it now!
 
+3. **⭐ The repository if you like the project!**
 
 ## 💡 Important
 
 > This project is provided *'as is'* for learning purposes with no warranties or responsibility from the developers/contributors. Use it at your own risk; you are the only one accountable for your actions
 
-* **Detection Status:** This project is intended solely for single-player use. 
+* **Detection Status:** This project is intended solely for single-player use.
 * **Anti-Virus Alerts:** This software may resemble malware in behavior because it accesses other processes memory, so it is commonly flagged by anti‑virus programs. I strongly encourage you to read the source code and build it yourself by following the [developers instructions](#-developer-instructions).
 
 ## 📘 Developer Instructions
