@@ -47,6 +47,10 @@ bool Engine::RunImpl() {
         return false;
     }
 
+#ifdef _DEBUG
+    LOGF(VERBOSE, "Before patching bytes is {}", before);
+#endif
+
     bool should_flip = before == 0;
     uint8_t byte = should_flip ? 0x01 : 0x0;
 
@@ -56,6 +60,10 @@ bool Engine::RunImpl() {
     VirtualProtectEx(process->handle_, (LPVOID)address, 1, old, &old);
 
     auto after = process->read<uint8_t>(address);
+
+#ifdef _DEBUG
+    LOGF(VERBOSE, "After patching bytes is {}", after);
+#endif
 
     if (after == byte)
         LOGF(INFO, "Patch sucessfull, hack has been {}! run me again to reverse the effect!", (should_flip ? "enabled" : "disabled"));
