@@ -91,8 +91,13 @@ public:
 
 	void write_bytes(uintptr_t addr, std::vector<uint8_t> patch)
 	{
+		DWORD old;
+		VirtualProtectEx(this->handle_, (LPVOID)addr, 1, PAGE_EXECUTE_READWRITE, &old);
+
 		pMemory cMemory;
 		cMemory.pfnNtWriteVirtualMemory(handle_, (void*)addr, &patch[0], patch.size(), 0);
+
+		VirtualProtectEx(this->handle_, (LPVOID)addr, 1, old, &old);
 	}
 
 	uintptr_t read_multi_address(uintptr_t ptr, std::vector<uintptr_t> offsets)

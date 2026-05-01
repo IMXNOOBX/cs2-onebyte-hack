@@ -38,9 +38,10 @@ bool Engine::InitImpl() {
 }
 
 bool Engine::RunImpl() {
-    uintptr_t address = client.base + offsets::base + 0xB;
+    uintptr_t patch_addr = client.base + offsets::cvar_unknown;
+    uintptr_t spec_show_addr = client.base + offsets::cvar_spec_show_xray;
 
-    auto before = process->read<uint8_t>(address);
+    auto before = process->read<uint8_t>(patch_addr);
 
     if (before != 0 && before != 1) {
         LOGF(WARNING, "Address returened an invalid value, the game probably updated");
@@ -51,26 +52,28 @@ bool Engine::RunImpl() {
     LOGF(VERBOSE, "Before patching bytes is {}", before);
 #endif
 
-    bool should_flip = before == 0;
-    uint8_t byte = should_flip ? 0x01 : 0x0;
+    uint8_t patch = before == 0 ? 0x01 : 0x0;
 
-    DWORD old;
-    VirtualProtectEx(process->handle_, (LPVOID)address, 1, PAGE_EXECUTE_READWRITE, &old);
-    process->write_bytes(address, std::vector<uint8_t>{byte});
-    VirtualProtectEx(process->handle_, (LPVOID)address, 1, old, &old);
+    process->write_bytes(spec_show_addr, std::vector<uint8_t>{0x0});
+    process->write_bytes(client.base + offsets::cvar_unknown, std::vector<uint8_t>{patch});
 
-    auto after = process->read<uint8_t>(address);
+    auto after = process->read<uint8_t>(patch_addr);
 
 #ifdef _DEBUG
     LOGF(VERBOSE, "After patching bytes is {}", after);
 #endif
 
-    if (after == byte)
-        LOGF(INFO, "Patch sucessfull, hack has been {}! run me again to reverse the effect!", (should_flip ? "enabled" : "disabled"));
-    else
-        LOGF(FATAL, "Failed to patch memory, expected value (0x{:X}) actual value (0x{:X})", byte, after);
+    if (after != patch) {
+        LOGF(FATAL, "Failed to patch memory, expected value (0x{:X}) actual value (0x{:X})", patch, after);
+        return false;
+    }
+        
+    LOGF(INFO, "Patch sucessfull, hack has been '{}'! run me again to reverse the effect!", (after == 1 ? "enabled" : "disabled"));
 
-    return after == byte;
+    if (after == 1)
+        LOGF(INFO, "If it doesn't seem to work, open the in-game console and type 'spec_show_xray 1'");
+
+    return true;
 }
 
 void Engine::Thread() {

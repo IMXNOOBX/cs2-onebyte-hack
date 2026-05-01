@@ -1,22 +1,23 @@
 # 🕹️ CS2 Onebyte Hack
 
-Simple onebyte hack, patching just one memory byte to enable cs2 replay glow. Very easy implementation, just open the app once to enable it, memory will patched and should work for the entire session. You can open it again to restore the memory.
+Simple onebyte hack, patching just one memory byte to enable cs2 replay glow cvar. Very easy implementation, just open the app once to enable it, memory will be patched and should work for the entire session. You can open it again to restore the memory.
 
 > This idea was brought to me by a community member, I'm not the one that discovered this "feature".
 
-## Showcase
+## 💡 Important
+
+> [!WARNING]
+> This project is provided *'as is'* for learning purposes with no warranties or responsibility from the developers/contributors. Use it at your own risk; you are the only one accountable for your actions!
+
+* **Detection Status:** This project is intended solely for single-player use. Furthermore, it contains **memory writing**, and might cause integrity checks to **raise detection** or **lower trust-factor**.
+* **Anti-Virus Alerts:** This software may resemble malware in behavior because it accesses other processes memory, so it is commonly flagged by anti‑virus programs. I strongly encourage you to read the source code and build it yourself by following the [developers instructions](#-developer-instructions).
+
+## 🔗 Showcase
 
 > Click the picture below to go to the showcase video
 
 [![cs2onebyte](.github/showcase.png)](https://youtu.be/giFeufea6s8)
 
-## 💡 Important
-
-> [!WARNING]
-> This project is provided *'as is'* for learning purposes with no warranties or responsibility from the developers/contributors. Use it at your own risk; you are the only one accountable for your actions
-
-* **Detection Status:** This project is intended solely for single-player use. This project **Writes To Memory**, and might cause integrity checks to raise detection or lower trust factor.
-* **Anti-Virus Alerts:** This software may resemble malware in behavior because it accesses other processes memory, so it is commonly flagged by anti‑virus programs. I strongly encourage you to read the source code and build it yourself by following the [developers instructions](#-developer-instructions).
 
 ## 🌳 Simple Use
 
