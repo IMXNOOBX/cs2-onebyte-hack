@@ -21,12 +21,14 @@ jobs:
         uses: microsoft/setup-msbuild@v1
 
       - name: Build solution
-        run: msbuild cs2-external-esp.sln /p:Configuration=Release
+        run: msbuild cs2-onebyte-hack.slnx /p:Configuration=Release
 
       - name: Prepare artifacts
         run: |
           mkdir release
           xcopy x64\Release\* release\ /E /I /Y
+          copy README.md release\README.md
+          copy LICENSE release\LICENSE
 
       - name: Archive artifacts
         run: |
