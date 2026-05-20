@@ -39,7 +39,6 @@ bool Engine::InitImpl() {
 
 bool Engine::RunImpl() {
     uintptr_t patch_addr = client.base + offsets::cvar_unknown;
-    uintptr_t spec_show_addr = client.base + offsets::cvar_spec_show_xray;
 
     auto before = process->read<uint8_t>(patch_addr);
 
@@ -54,7 +53,6 @@ bool Engine::RunImpl() {
 
     uint8_t patch = before == 0 ? 0x01 : 0x0;
 
-    process->write_bytes(spec_show_addr, std::vector<uint8_t>{0x0});
     process->write_bytes(client.base + offsets::cvar_unknown, std::vector<uint8_t>{patch});
 
     auto after = process->read<uint8_t>(patch_addr);

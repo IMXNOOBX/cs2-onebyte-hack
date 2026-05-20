@@ -2,7 +2,8 @@
 
 Simple onebyte hack, patching just one memory byte to enable cs2 replay glow cvar. Very easy implementation, just open the app once to enable it, memory will be patched and should work for the entire session. You can open it again to restore the memory.
 
-> This idea was brought to me by a community member, I'm not the one that discovered this "feature".
+> [!CAUTION]
+> As stated in [the important section](#-important), game developers will likely end up implementing a runtime check, likely flagging your account if found enabled in game. Its use online is not recommended!
 
 ## 💡 Important
 
@@ -17,7 +18,6 @@ Simple onebyte hack, patching just one memory byte to enable cs2 replay glow cva
 > Click the picture below to go to the showcase video
 
 [![cs2onebyte](.github/showcase.png)](https://youtu.be/giFeufea6s8)
-
 
 ## 🌳 Simple Use
 
@@ -39,6 +39,22 @@ git clone --recursive https://github.com/IMXNOOBX/cs2-onebyte-hack
 	- Build: **`x64 - Release`**
 
 3. Locate your binary file in the folder `<arch>/<configuration>`, e.g., `x64/Release`.
+
+### 📡 Updating/Manual Mode
+
+> This project is really easy to maintain, as its only changing game `cvars` (*Console Variables*). This short tutorial should work for any `cvar` in the game, just toggle its state, scan with `CE` the differences and pinpoint your variable in memory. You will need `Cheat Engine` to dump the latest offsets.
+
+- Attach to the game
+- Open **Memory View** > **Search** > **Find Asembly Code** and paste the following.
+```asm
+mov [rsp+20],rbx
+cmp byte ptr [rax],00
+jne
+```
+> You might also want to change `From` (*starting address*) to `client.dll` to be more precise and faster search
+- Click scan and wait for the first match (*usually the first if not, just try with the next*)
+- Once found, change `cmp byte ptr [rax],00` to `cmp byte ptr [rax],01`
+> This should enable your X-Ray while in game
 
 ## 💫 Credits
 
