@@ -31,6 +31,15 @@ bool Engine::InitImpl() {
         return false;
     }
 
+    // In case its manually provided
+    if (!offsets::cvar_unknown)
+        offsets::cvar_unknown = process->FindSignature(offsets::signatures::cvar_unknown);
+
+    if (!offsets::cvar_unknown) {
+        LOGF(FATAL, "Failed to find offset with provided signature, please update Offsets.hpp with the latest dump");
+        return false;
+    }
+
     //std::thread(&Engine::Thread, this).detach();
 
     LOGF(VERBOSE, "Successfully initialized engine...");
