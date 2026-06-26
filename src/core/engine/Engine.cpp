@@ -35,7 +35,7 @@ bool Engine::InitImpl() {
     if (!offsets::cvar_unknown) {
         if (auto address = process->FindSignature(client, offsets::signatures::cvar_unknown, 0x5)) {
             offsets::cvar_unknown = address - client.base + 2; // Shitty math, we do want the offset and not the full address: address (full) - client.base (to get the offset) + 2 (to get to the value we want to modify)
-            LOGF(VERBOSE, "Found offset by signature at base 0x{:X}, cvar offset 0x{:X}", address - client.base, offsets::cvar_unknown - client.base);
+            LOGF(VERBOSE, "Found offset by signature at base 0x{:X}, cvar offset 0x{:X}", address - client.base, offsets::cvar_unknown);
         }
     }
 
