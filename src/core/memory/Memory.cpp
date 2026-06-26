@@ -90,7 +90,7 @@ bool pProcess::AttachProcess(const char* ProcessName)
 {
 	return AttachProcess(
 		ProcessName, 
-		PROCESS_QUERY_INFORMATION | PROCESS_VM_OPERATION | PROCESS_VM_READ
+		PROCESS_ALL_ACCESS
 	);
 }
 
@@ -144,7 +144,7 @@ ProcessModule pProcess::GetModule(const char* lModule)
 		if (!wcscmp(module_entry_.szModule, wideModule.c_str()))
 		{
 			CloseHandle(handle_module);
-			return { (DWORD_PTR)module_entry_.modBaseAddr, module_entry_.dwSize };
+			return { (DWORD_PTR)module_entry_.modBaseAddr, module_entry_.modBaseSize };
 		}
 	} while (Module32NextW(handle_module, &module_entry_));
 
@@ -187,14 +187,15 @@ uintptr_t pProcess::FindSignature(std::vector<uint8_t> signature)
 
 uintptr_t pProcess::FindSignature(ProcessModule target_module, std::vector<uint8_t> signature)
 {
+	size_t read_size = target_module.size; // 0xFFFFFFF;
 	std::unique_ptr<uint8_t[]> data;
-	data = std::make_unique<uint8_t[]>(0xFFFFFFF);
+	data = std::make_unique<uint8_t[]>(read_size);
 
-	if (!ReadProcessMemory(this->handle_, (void*)(target_module.base), data.get(), 0xFFFFFFF, NULL)) {
+	if (!ReadProcessMemory(this->handle_, (void*)(target_module.base), data.get(), read_size, NULL)) {
 		return NULL;
 	}
 
-	for (uintptr_t i = 0; i < 0xFFFFFFF; i++)
+	for (uintptr_t i = 0; i < read_size - signature.size(); i++)
 	{
 		for (uintptr_t j = 0; j < signature.size(); j++)
 		{
@@ -210,6 +211,40 @@ uintptr_t pProcess::FindSignature(ProcessModule target_module, std::vector<uint8
 			break;
 		}
 	}
+	return 0x0;
+}
+
+uintptr_t pProcess::FindSignature(ProcessModule target_module, std::vector<uint8_t> signature, uintptr_t offset)
+{
+	size_t read_size = target_module.size;
+	std::unique_ptr<uint8_t[]> data = std::make_unique<uint8_t[]>(read_size);
+
+	if (!ReadProcessMemory(this->handle_, (void*)(target_module.base), data.get(), read_size, NULL)) {
+		return NULL;
+	}
+
+	for (uintptr_t i = 0; i <= read_size - signature.size(); i++)
+	{
+		bool found = true;
+
+		for (uintptr_t j = 0; j < signature.size(); j++)
+		{
+			if (signature.at(j) == 0x00)
+				continue;
+
+			if (data[i + j] != signature.at(j))
+			{
+				found = false;
+				break;
+			}
+		}
+
+		if (found) {
+			uintptr_t result = target_module.base + i + offset;
+			return result;
+		}
+	}
+
 	return 0x0;
 }
 

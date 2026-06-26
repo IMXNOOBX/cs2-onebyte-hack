@@ -31,9 +31,13 @@ bool Engine::InitImpl() {
         return false;
     }
 
-    // In case its manually provided
-    if (!offsets::cvar_unknown)
-        offsets::cvar_unknown = process->FindSignature(offsets::signatures::cvar_unknown);
+    // In case its manually provided, we skip sig search
+    if (!offsets::cvar_unknown) {
+        if (auto address = process->FindSignature(client, offsets::signatures::cvar_unknown, 0x5)) {
+            offsets::cvar_unknown = address - client.base + 2; // Shitty math, we do want the offset and not the full address: address (full) - client.base (to get the offset) + 2 (to get to the value we want to modify)
+            LOGF(VERBOSE, "Found offset by signature at base 0x{:X}, cvar offset 0x{:X}", address - client.base, offsets::cvar_unknown - client.base);
+        }
+    }
 
     if (!offsets::cvar_unknown) {
         LOGF(FATAL, "Failed to find offset with provided signature, please update Offsets.hpp with the latest dump");
