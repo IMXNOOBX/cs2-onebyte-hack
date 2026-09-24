@@ -217,12 +217,15 @@ uintptr_t pProcess::FindSignature(ProcessModule target_module, std::vector<uint8
 uintptr_t pProcess::FindSignature(ProcessModule target_module, std::vector<uint8_t> signature, uintptr_t offset)
 {
 	size_t read_size = target_module.size;
+	if (signature.empty() || signature.size() > read_size)
+		return 0;
 	std::unique_ptr<uint8_t[]> data = std::make_unique<uint8_t[]>(read_size);
 
 	if (!ReadProcessMemory(this->handle_, (void*)(target_module.base), data.get(), read_size, NULL)) {
 		return NULL;
 	}
 
+	uintptr_t result = 0;
 	for (uintptr_t i = 0; i <= read_size - signature.size(); i++)
 	{
 		bool found = true;
@@ -240,12 +243,13 @@ uintptr_t pProcess::FindSignature(ProcessModule target_module, std::vector<uint8
 		}
 
 		if (found) {
-			uintptr_t result = target_module.base + i + offset;
-			return result;
+			if (result)
+				return 0;
+			result = target_module.base + i + offset;
 		}
 	}
 
-	return 0x0;
+	return result;
 }
 
 uintptr_t pProcess::FindCodeCave(uint32_t length_in_bytes)
